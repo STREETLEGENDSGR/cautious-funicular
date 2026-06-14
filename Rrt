@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Street Legends GR</title>
+    <!-- Εισαγωγή γραμματοσειράς και εικονιδίων -->
+    <link href="https://googleapis.com" rel="stylesheet">
+    <link rel="stylesheet" href="https://cloudflare.com">
+    
+    <style>
+        /* --- ΓΕΝΙΚΑ ΣΤΥΛ --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+        }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        .gold-text {
+            color: #c5a059;
+        }
+        .btn-gold {
+            display: inline-block;
+            border: 1px solid #c5a059;
+            color: #ffffff;
+            padding: 10px 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s ease;
+            cursor: pointer;
+        }
+        .btn-gold:hover {
+            background-color: #c5a059;
+            color: #000;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+            position: absolute;
+            width: 100%;
+            z-index: 10;
+        }
+        .logo {
+            font-weight: 900;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+        .logo span { color: #c5a059; }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        .nav-links li:hover { color: #c5a059; cursor: pointer; }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 95vh;
+            /* Αντικατάστησε το URL με τη δική σου εικόνα αυτοκινήτων */
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), #050505), url('https://unsplash.com') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 8%;
+        }
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+        .hero .subtitle {
+            font-size: 1rem;
+            letter-spacing: 3px;
+            margin-bottom: 40px;
+            font-weight: 400;
+            color: #ccc;
+        }
+        .meet-box {
+            background: rgba(0, 0, 0, 0.6);
+            border-left: 3px solid #c5a059;
+            padding: 15px 25px;
+            max-width: 320px;
+            margin-bottom: 25px;
+        }
+        .meet-box .title {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: #aaa;
+            margin-bottom: 5px;
+        }
+        .meet-box .date {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        /* --- ΥΠΟΔΟΧΗ --- */
+        .welcome-section {
+            text-align: center;
+            padding: 60px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .welcome-section h2 {
+            font-size: 1.6rem;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+        .welcome-section p {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* --- ΧΑΡΑΚΤΗΡΙΣΤΙΚΑ (FEATURES) --- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 40px 5%;
+        }
+        .feature-card {
+            text-align: center;
+            padding: 30px 20px;
+            background: #0c0c0c;
+            border-top: 3px solid #c5a059;
+        }
+        .feature-card i {
+            font-size: 2rem;
+            color: #c5a059;
+            margin-bottom: 20px;
+        }
+        .feature-card h3 {
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+        .feature-card p {
+            font-size: 0.8rem;
+            color: #777;
+        }
+
+        /* --- GALLERY & ΑΝΑΚΟΙΝΩΣΕΙΣ --- */
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            padding: 60px 5%;
+        }
+        @media (max-width: 900px) {
+            .main-content { grid-template-columns: 1fr; }
+        }
+        .section-title {
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #222;
+            padding-bottom: 10px;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .gallery-item {
+            position: relative;
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+        }
+        .gallery-item .label {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .announcement-box {
+            background: #0c0c0c;
+            padding: 30px;
+            border: 1px solid #1a1a1a;
+        }
+        .announcement-item {
+            margin-bottom: 30px;
+        }
+        .announcement-item h4 {
+            color: #c5a059;
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+        .announcement-item p {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #000;
+            text-align: center;
+            padding: 60px 20px;
+            border-top: 1px solid #111;
+        }
+        footer h3 {
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+        .social-icons i:hover { color: #c5a059; cursor: pointer; }
+        .instagram-tag {
+            font-size: 0.85rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="logo">STREET LEGENDS <span>GR</span></div>
+        <ul class="nav-links">
+            <li>ΑΡΧΙΚΗ</li>
+            <li>ΣΥΝΑΝΤΗΣΕΙΣ & EVENTS</li>
+            <li>GALLERY</li>
+            <li>PROJECT CARS</li>
+            <li>ΕΠΙΚΟΙΝΩΝΙΑ</li>
+        </ul>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="hero">
+        <h1>STREET<br><span class="gold-text">LEGENDS</span><br>GR</h1>
+        <p class="subtitle">ΕΚΕΙ ΠΟΥ ΤΑ ΑΥΤΟΚΙΝΗΤΑ ΓΙΝΟΝΤΑΙ ΘΡΥΛΟΙ.</p>
+        
+        <div class="meet-box">
+            <div class="title"><i class="fa-regular fa-calendar"></i> ΕΠΟΜΕΝΗ ΣΥΝΑΝΤΗΣΗ:</div>
+            <div class="date">17/07/2026 - 18:00</div>
+        </div>
+        <div>
+            <a href="#" class="btn-gold">Δείτε περισσότερα <i class="fa-solid fa-chevron-right" style="font-size: 0.6rem;"></i></a>
+        </div>
+    </header>
+
+    <!-- WELCOME -->
+    <section class="welcome-section">
+        <h2>ΚΑΛΩΣ ΗΡΘΕΣ ΣΤΟ <span class="gold-text">STREET LEGENDS GR</span></h2>
+        <p>Μια κοινότητα για όσους ζουν και αναπνέουν για τα αυτοκίνητα. Συναντήσεις, βόλτες, πάθος και αληθινές φιλίες.</p>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features-grid">
+        <div class="feature-card">
+            <i class="fa-solid fa-users"></i>
+            <h3>ΚΟΙΝΟΤΗΤΑ</h3>
+            <p>Γίνε μέλος μιας μεγάλης παρέας με το ίδιο πάθος.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-car"></i>
+            <h3>ΣΥΝΑΝΤΗΣΕΙΣ</h3>
+            <p>Διοργανώνουμε τακτικά meets και εκδηλώσεις.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-camera"></i>
+            <h3>ΦΩΤΟΓΡΑΦΙΕΣ</h3>
+            <p>Στιγμές από τις καλύτερες συναντήσεις μας.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-wrench"></i>
+            <h3>PROJECT CARS</h3>
+            <p>Παρουσίαση και εξέλιξη των αυτοκινήτων μας.</p>
+        </div>
+    </section>
+
+    <!-- MAIN SECTION (GALLERY & ANNOUNCEMENTS) -->
+    <main class="main-content">
+        <!-- Gallery Preview -->
+        <section>
+            <h2 class="section-title">GALLERY PREVIEW</h2>
+            <div class="gallery-grid">
+                <!-- Αντικατάστησε τα URLs με δικές σου εικόνες -->
+                <div class="gallery-item" style="background-image: linear-gradient(transparent, rgba(0,0,0,0.8)), url('https://unsplash.com');">
+                    <span class="gallery-label-box label">DRIFT</span>
+                </div>
+                <div class="gallery-item" style="background-image: linear-gradient(transparent, rgba(0,0,0,0.8)), url('https://unsplash.com');">
+                    <span class="label">JDM</span>
+                </div>
+                <div class="gallery-item" style="background-image: linear-gradient(transparent, rgba(0,0,0,0.8)), url('https://unsplash.com');">
+                    <span class="label">GERMAN STYLE</span>
